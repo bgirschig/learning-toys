@@ -12,5 +12,8 @@
     "sass": "^1.71.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.6"
+  },
+  "dependencies": {
+    "js-confetti": "^0.12.0"
   }
 }

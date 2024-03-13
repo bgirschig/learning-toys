@@ -1,12 +1,12 @@
 import './style.scss'
-import { listAvailableModules, loadTestCards } from './testCard';
+import * as testCards from './testCard';
 
 
 function main() {
   const params = loadUrlParams();
-  loadTestCards(params.modules);
-
-  console.log(listAvailableModules());
+  testCards.loadTestCards(params.modules);
+  testCards.config.confettiOnSuccess = !params.noConfetti;
+  console.log(testCards.listAvailableModules());
 }
 
 function loadUrlParams() {
@@ -14,6 +14,7 @@ function loadUrlParams() {
   const modules = searchParams.get("modules") || "";
   return {
     modules: modules.split(",").map(item=>item.trim()),
+    noConfetti: searchParams.has("no-confetti"),
   }
 }
 

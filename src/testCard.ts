@@ -1,17 +1,27 @@
 import { getFileName } from "./utils/path";
 import './test-card.scss'
+import JSConfetti from 'js-confetti'
 
 const cssTestCards = import.meta.glob("./test-cards/*.{css,scss}");
 const jsTestCards = import.meta.glob("./test-cards/*.{ts,js}");
+const jsConfetti = new JSConfetti();
 
-const TEST_CARD_CLASSNAME = 'test-card'
+const TEST_CARD_CLASSNAME = 'test-card';
+
+export const config = {
+  confettiOnSuccess: true,
+}
 
 export function initTestCard(moduleUrl:string) {
   const name = getFileName(moduleUrl);
   const el = document.querySelector(`.${TEST_CARD_CLASSNAME}#${name}`) as HTMLElement;
+  let isDone = false;
 
   function success() {
+    if (isDone) return;
     el.classList.add('success');
+    if (config.confettiOnSuccess) jsConfetti.addConfetti({confettiNumber: 200});
+    isDone = true;
   }
 
   return {name, el, success};
