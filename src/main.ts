@@ -6,17 +6,17 @@ function main() {
   const params = loadUrlParams();
   const availableCards = testCards.listAvailableCards();
 
-  if (params.modules.length === 0) testCards.loadTestCards(availableCards);
-  else testCards.loadTestCards(params.modules);
+  if (params.cards.length === 0) testCards.loadTestCards(availableCards);
+  else testCards.loadTestCards(params.cards);
   
   testCards.config.confettiOnSuccess = !params.noConfetti;
 }
 
 function loadUrlParams() {
   const searchParams = new URLSearchParams(window.location.search);
-  const modules = searchParams.get("modules") || "";
+  const cards = searchParams.get("cards") || "";
   return {
-    modules: modules.split(",").map(item=>item.trim()).filter(Boolean),
+    cards: cards.split(",").map(item=>item.trim()).filter(Boolean),
     noConfetti: searchParams.has("no-confetti"),
   }
 }
