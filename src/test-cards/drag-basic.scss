@@ -1,0 +1,32 @@
+[data-card="drag-basic"] {
+  position: relative;
+
+  .draggable, .target {
+    border: 2px solid;
+    border-radius: 5px;
+  }
+  
+  .draggable {
+    width: 100px;
+    height: 100px;
+    
+    position: absolute;
+    top: 10%;
+    left: 10%; 
+
+    background-color: rgb(219, 227, 255);
+    border-color: rgb(67, 79, 119);
+  }
+
+  .target {
+    width: 100px;
+    height: 100px;
+    
+    position: absolute;
+    bottom: 10%;
+    right: 10%; 
+
+    background-color: rgb(219, 255, 224);
+    border-color: rgb(67, 119, 74);
+  }
+}

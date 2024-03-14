@@ -9,11 +9,13 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@types/hammerjs": "^2.0.45",
     "sass": "^1.71.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.6"
   },
   "dependencies": {
+    "hammerjs": "^2.0.8",
     "js-confetti": "^0.12.0"
   }
 }
