@@ -1,5 +1,5 @@
 import { getFileName } from "./utils/path";
-import './test-card.scss'
+import './style/test-card.scss'
 import JSConfetti from 'js-confetti'
 
 const cssTestCards = import.meta.glob("./test-cards/*.{css,scss}");
