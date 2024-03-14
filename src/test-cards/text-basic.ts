@@ -1,5 +1,4 @@
 import { CardModuleInit } from "../testCard";
-import './text-basic.scss';
 
 export default function init({el, success, name}:CardModuleInit) {
   const targetText = el.dataset.targetText;

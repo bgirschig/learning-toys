@@ -21,6 +21,7 @@ async function initTestCard(cardId:string) {
   if (!moduleName) throw new Error(`card's data-${DATASET_CARD_MODULE_KEY} attribute should be set`);
 
   const moduleLoader = cardModules[moduleName];
+  if (!moduleLoader) throw new Error(`module not found: ${moduleName}`)
   const module = await moduleLoader();
 
   el.classList.add("active");
@@ -49,13 +50,25 @@ export function loadTestCards(cardIds:string[]) {
 }
 
 function loadModuleMap() {
-  const rawMap = import.meta.glob("./test-cards/*.{ts,js}");
+  
+  const cssModules = import.meta.glob("./test-cards/*.{css,scss}");
+  const cssModuleMap:{[key:string]:Function} = {};
+  Object.keys(cssModules).forEach(key => {
+    const name = getFileName(key);
+    cssModuleMap[name] = cssModules[key];
+  });
+    
+  const jsModules = import.meta.glob("./test-cards/*.{ts,js}");
   const output:{[key:string]:Function} = {};
-  Object.keys(rawMap).forEach(key => {
+  Object.keys(jsModules).forEach(key => {
     const name = getFileName(key);
     if (name in output) throw new Error(`module name conflict: found multiple modules with name "${name}"`);
-    output[name] = rawMap[key];
+    output[name] = () => {
+      if (name in cssModuleMap) cssModuleMap[name]();
+      return jsModules[key]();
+    }
   })
+
   return output;
 }
 
