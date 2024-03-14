@@ -38,6 +38,7 @@
   text-align: center;
 
   user-select: none;
+  overflow: hidden;
 
   &:not(.active) { display: none; }
 
