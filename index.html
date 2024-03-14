@@ -9,23 +9,23 @@
   <body>
     <div id="test-cards">
 
-      <div id="mouse-over" class="test-card wide">
+      <div id="mouse-over" data-card="mouse-over" class="test-card wide">
         <div class="content">
           <p>Déplacer la souris dans cette zone</p>
           <p class="on-success"><strong>Bravo!</strong></p>
         </div>
       </div>
 
-      <div id="mouse-click" class="test-card wide">
+      <div id="mouse-click" data-card="mouse-click" class="test-card wide">
         <div class="content">
           <p>cliquer dans cette zone</p>
           <p class="on-success"><strong>Bravo!</strong> Score: <span class="score">0</span></p>
         </div>
       </div>
     
-      <div id="text-basic" class="test-card wide" data-target-text="bonjour">
+      <div id="text-basic" data-card="text-basic" class="test-card wide" data-target-text="bonjour">
         <div class="content">
-          <p>Écrire <span class="targetText">bonjour</span> ci dessous</p>
+          <p>Écrire <span class="targetText"></span> ci dessous</p>
           <input type="text">
           <p class="on-success"><strong>Bravo!</strong></p>
         </div>

@@ -4,9 +4,9 @@ import * as testCards from './testCard';
 
 function main() {
   const params = loadUrlParams();
-  const availableModules = testCards.listAvailableModules();
+  const availableCards = testCards.listAvailableCards();
 
-  if (params.modules.length === 0) testCards.loadTestCards(availableModules);
+  if (params.modules.length === 0) testCards.loadTestCards(availableCards);
   else testCards.loadTestCards(params.modules);
   
   testCards.config.confettiOnSuccess = !params.noConfetti;

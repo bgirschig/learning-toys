@@ -1,8 +1,5 @@
-import { initTestCard } from "../testCard";
+import { CardModuleInit } from "../testCard";
 
-function main() {
-  const testCard = initTestCard(import.meta.url);
-  testCard.el?.addEventListener("mousemove", testCard.success);
+export default function init({el, success}:CardModuleInit) {
+  el.addEventListener("mousemove", success);
 }
-
-main();

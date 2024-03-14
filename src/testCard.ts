@@ -2,21 +2,30 @@ import { getFileName } from "./utils/path";
 import './style/test-card.scss'
 import JSConfetti from 'js-confetti'
 
-const cssTestCards = import.meta.glob("./test-cards/*.{css,scss}");
-const jsTestCards = import.meta.glob("./test-cards/*.{ts,js}");
+const cardModules = loadModuleMap();
 const jsConfetti = new JSConfetti();
 
 const TEST_CARD_CLASSNAME = 'test-card';
+const DATASET_CARD_MODULE_KEY = 'card';
 
 export const config = {
   confettiOnSuccess: true,
 }
 
-export function initTestCard(moduleUrl:string) {
-  const name = getFileName(moduleUrl);
-  const el = document.querySelector(`.${TEST_CARD_CLASSNAME}#${name}`) as HTMLElement;
-  let isDone = false;
+async function initTestCard(cardId:string) {
+  const selector = `.${TEST_CARD_CLASSNAME}#${cardId}[data-${DATASET_CARD_MODULE_KEY}]`;
+  const el = document.querySelector(selector) as HTMLElement;
+  if (!(el instanceof HTMLElement)) throw new Error(`card not found: "${selector}"`);
+  
+  const moduleName = el.dataset[DATASET_CARD_MODULE_KEY];
+  if (!moduleName) throw new Error(`card's data-${DATASET_CARD_MODULE_KEY} attribute should be set`);
 
+  const moduleLoader = cardModules[moduleName];
+  const module = await moduleLoader();
+
+  el.classList.add("active");
+
+  let isDone = false;
   function success() {
     if (isDone) return;
     el.classList.add('success');
@@ -24,35 +33,35 @@ export function initTestCard(moduleUrl:string) {
     isDone = true;
   }
 
-  return {name, el, success};
+  const init:CardModuleInit = {cardId, el, name:moduleName, success};
+  module.default(init);
 }
 
-export function listAvailableModules() {
-  const cards = [
-    ...Object.keys(cssTestCards).map(getFileName),
-    ...Object.keys(jsTestCards).map(getFileName),
-    ...Array.from(document.querySelectorAll(`.${TEST_CARD_CLASSNAME}`)).map(item => item.id),
-  ];
+export function listAvailableCards() {
+  const selector = `.${TEST_CARD_CLASSNAME}[data-${DATASET_CARD_MODULE_KEY}]`;
+  const elements = document.querySelectorAll(selector);
+  const cards = Array.from(elements).map(item => item.id);
   return Array.from(new Set(cards));
 }
 
 export function loadTestCards(cardIds:string[]) {
-  const testCardEls = document.querySelectorAll(".test-card");
-  testCardEls.forEach(testCard => {
-    if (cardIds.includes(testCard.id)) testCard.classList.add("active");
+  cardIds.forEach(initTestCard);
+}
+
+function loadModuleMap() {
+  const rawMap = import.meta.glob("./test-cards/*.{ts,js}");
+  const output:{[key:string]:Function} = {};
+  Object.keys(rawMap).forEach(key => {
+    const name = getFileName(key);
+    if (name in output) throw new Error(`module name conflict: found multiple modules with name "${name}"`);
+    output[name] = rawMap[key];
   })
+  return output;
+}
 
-  for(let key in cssTestCards) {
-    const moduleName = getFileName(key);
-    if (cardIds.includes(moduleName)) {
-      cssTestCards[key]();
-    }
-  }
-
-  for(let key in jsTestCards) {
-    const moduleName = getFileName(key);
-    if (cardIds.includes(moduleName)) {
-      jsTestCards[key]();
-    }
-  }
+export type CardModuleInit = {
+  cardId: string,
+  el: HTMLElement,
+  name: string,
+  success: () => void,
 }
