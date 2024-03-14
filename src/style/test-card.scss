@@ -15,9 +15,13 @@
   }
   @media (max-width: 700px) {
     grid-template-columns: repeat(2, 1fr);
+    .test-card.wide { grid-column: span 1; }
+    .test-card.x-wide { grid-column: span 2; }
   }
   @media (max-width: 500px) {
     grid-template-columns: repeat(1, 1fr);
+    .test-card.wide { grid-column: span 1; }
+    .test-card.x-wide { grid-column: span 1; }
   }
 }
 
@@ -28,6 +32,7 @@
   border-radius: 7px;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -38,6 +43,8 @@
 
   &.wide { grid-column: span 2; }
   &.tall { grid-row: span 2; }
+  &.x-wide { grid-column: span 4; }
+  &.x-tall { grid-row: span 4; }
 
   &.success {
     border: 3px solid rgb(0, 168, 14);
