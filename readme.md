@@ -1,5 +1,6 @@
 # Computer exercises
-A set of exercises to help students learn the basics of computer interactions (mouse, click, drag, keyboard, etc...)
+A set of exercises to help students learn the basics of computer interactions (mouse, click, drag, keyboard, etc...).  
+Currently hosted on [bastiengirschig.com](https://projects.bastiengirschig.com/exercices)
 
 <img src="./documentation/screenshot.png" alt="screenshot of the website" style="max-height:80vh"/>
 
