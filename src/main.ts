@@ -1,6 +1,8 @@
 import './style/style.scss'
 import * as testCards from './testCard';
 
+import './audio';
+
 
 function main() {
   const params = loadUrlParams();
@@ -10,6 +12,7 @@ function main() {
   else testCards.loadTestCards(params.cards);
   
   testCards.config.confettiOnSuccess = !params.noConfetti;
+  testCards.config.soundOnSuccess = !params.noSound;
 }
 
 function loadUrlParams() {
@@ -18,6 +21,7 @@ function loadUrlParams() {
   return {
     cards: cards.split(",").map(item=>item.trim()).filter(Boolean),
     noConfetti: searchParams.has("no-confetti"),
+    noSound: searchParams.has("no-sound"),
   }
 }
 

@@ -2,6 +2,10 @@ import { getFileName } from "./utils/path";
 import './style/test-card.scss'
 import JSConfetti from 'js-confetti'
 
+import { playsound } from './audio';
+import successBell from './assets/success-bell.mp3';
+
+
 const cardModules = loadModuleMap();
 const jsConfetti = new JSConfetti();
 
@@ -10,6 +14,7 @@ const DATASET_CARD_MODULE_KEY = 'card';
 
 export const config = {
   confettiOnSuccess: true,
+  soundOnSuccess: true,
 }
 
 async function initTestCard(cardId:string) {
@@ -31,6 +36,7 @@ async function initTestCard(cardId:string) {
     if (isDone) return;
     el.classList.add('success');
     if (config.confettiOnSuccess) jsConfetti.addConfetti({confettiNumber: 200});
+    if (config.soundOnSuccess) playsound(successBell);
     isDone = true;
   }
 
