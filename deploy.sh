@@ -14,6 +14,6 @@ cd "$(dirname "$0")"
 # build
 npm run build
 # deploy built files
-rsync -avz --delete $DEPLOY_DIR $TARGET_HOST:$TARGET_PATH
+rsync -avz --delete $DEPLOY_DIR $TARGET_HOST$TARGET_PATH
 
 echo "successfully deployed. Site can now be viewed at: $SITE_URL"
