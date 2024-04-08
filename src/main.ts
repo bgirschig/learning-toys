@@ -3,6 +3,8 @@ import * as testCards from './testCard';
 
 import './audio';
 
+// import card from './asdf.html?raw';
+// document.body.innerHTML += card;
 
 function main() {
   const params = loadUrlParams();
